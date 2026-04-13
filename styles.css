@@ -1,0 +1,662 @@
+		/* --- CSS STYLES --- */
+		:root {
+			--primary-color: #d32f2f;
+			/* Devotional Red */
+			--text-color: #333;
+			--gold: #ffc107;
+			--bg-color: #ffffff;
+			--header-bg: #fdfdfd;
+		}
+
+		html {
+			width: 99vw;
+
+		}
+
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			margin: 0;
+			padding-top: 70px;
+			/* Space for fixed header */
+			line-height: 1.6;
+		}
+
+		header {
+			background-color: var(--header-bg);
+			border-bottom: 2px solid #eee;
+			padding: 0.5rem 2rem;
+			position: fixed;
+			top: 0;
+			width: 99vw;
+			z-index: 1000;
+			box-sizing: border-box;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			max-width: 90vw;
+			margin: 0 auto;
+		}
+
+		.logo {
+			font-size: 1.6rem;
+			font-weight: bold;
+			color: var(--primary-color);
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.nav-links {
+			list-style: none;
+			display: flex;
+			gap: 25px;
+			margin: 0;
+			padding: 0;
+			align-items: center;
+		}
+
+		.nav-links li a {
+			text-decoration: none;
+			color: var(--text-color);
+			font-weight: 500;
+			font-size: 1rem;
+			transition: 0.3s;
+		}
+
+		.nav-links li a:hover {
+			color: var(--primary-color);
+		}
+
+		/* Call to Action Button */
+		.book-btn {
+			background-color: var(--primary-color);
+			color: white !important;
+			padding: 10px 20px;
+			border-radius: 25px;
+			transition: transform 0.2s ease;
+		}
+
+		.book-btn:hover {
+			transform: scale(1.05);
+			background-color: #b71c1c;
+		}
+
+		/* Hamburger Menu (Hidden on Desktop) */
+		.menu-toggle {
+			display: none;
+			flex-direction: column;
+			cursor: pointer;
+			gap: 5px;
+		}
+
+		.menu-toggle span {
+			height: 3px;
+			width: 28px;
+			background-color: var(--text-color);
+			border-radius: 3px;
+			transition: 0.4s;
+		}
+
+		.ourservice {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center
+		}
+
+		.ourservice>h1 {
+			width: 50%;
+			background-color: #ff0000;
+			border-radius: 25px;
+			font-weight: 500;
+			color: white;
+			text-align: center;
+		}
+
+		/* --- BENEFITS SECTION (ANIMATION AREA) --- */
+		.benefits-container {
+			max-width: 100%;
+			margin: 0px auto;
+			padding: 10px;
+		}
+
+		.ourserviceunderline {
+			width: 90%;
+			background-color: #ff0000;
+			height: 2px;
+		}
+
+		.section-title {
+			text-align: center;
+			color: white;
+			margin-bottom: 24px;
+			font-size: 2rem;
+			background: linear-gradient(45deg, #ff0000, #000000);
+
+		}
+
+		.benefit-row {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+
+		}
+
+		.benefit-item {
+			background: rgba(255, 255, 255, 0.05);
+			padding: 10px;
+			border-radius: 10px;
+			border-left: 4px solid #ffbd07;
+			font-size: 1.5rem;
+			margin-top: 1%;
+			opacity: 0;
+			transition: all 0.8s ease-out;
+			background: linear-gradient(45deg, #007eff, #00ffc6);
+			color: white;
+			font-size: 1.8rem;
+			font-weight: 500;
+		}
+
+		/* The Animation Logic */
+		.from-left {
+			transform: translateX(-100px);
+			/* Slide from left */
+		}
+
+		.from-right {
+			transform: translateX(100px);
+			/* Slide from right */
+		}
+
+		.benefit-item.show {
+			opacity: 1;
+			transform: translateX(0);
+			/* Meet in the middle */
+		}
+
+		.benefit-item:hover {
+			background: rgba(79, 177, 4, 0.971);
+			border-left: 4px solid #fff;
+		}
+
+		/* WhatsApp Floating Button Styling */
+		.whatsapp-float {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			background-color: #25d366;
+			/* WhatsApp Green */
+			color: white;
+			text-decoration: none;
+			padding: 10px 20px;
+			border-radius: 50px;
+			display: flex;
+			align-items: center;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+			z-index: 2000;
+			transition: all 0.3s ease;
+			animation: pulse 2s infinite;
+			/* Attention-grabbing pulse */
+		}
+
+		.whatsapp-content {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.whatsapp-float img {
+			width: 25px;
+			height: 25px;
+		}
+
+		.whatsapp-float span {
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		/* Hover Effect */
+		.whatsapp-float:hover {
+			transform: scale(1.1);
+			background-color: #128c7e;
+		}
+
+		/* Pulse Animation */
+		@keyframes pulse {
+			0% {
+				box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+			}
+
+			70% {
+				box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+			}
+
+			100% {
+				box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+			}
+		}
+
+		/* Mobile Adjustment */
+		@media (max-width: 768px) {
+			.whatsapp-float span {
+				display: none;
+				/* Only show icon on mobile to save space */
+			}
+
+			.whatsapp-float {
+				padding: 12px;
+				right: 20px;
+				bottom: 20px;
+			}
+		}
+
+
+		@media (max-width: 480px) {
+			.feedback-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.knowledge-container {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		/* --- MOBILE RESPONSIVENESS --- */
+		@media (max-width: 992px) {
+			.menu-toggle {
+				display: flex;
+			}
+
+			.nav-links {
+				display: none;
+				/* Hide by default */
+				flex-direction: column;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				width: 100%;
+				background-color: white;
+				padding: 20px 0;
+				box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+				gap: 15px;
+			}
+
+			.nav-links.active {
+				display: flex;
+				/* Show when toggled */
+			}
+
+			.book-btn {
+				border-radius: 0;
+				width: 80%;
+				text-align: center;
+			}
+		}
+
+		.slider-container {
+			position: relative;
+			max-width: 100%;
+			margin: 40px auto;
+			overflow: hidden;
+			border-radius: 12px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+			background: #000;
+		}
+
+		.slides {
+			display: flex;
+			transition: transform 0.5s ease-in-out;
+		}
+
+		.slide {
+			min-width: 100%;
+			aspect-ratio: 16 / 9;
+		}
+
+		.slide iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Slider Controls */
+		.prev,
+		.next {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			background: rgba(0, 0, 0, 0.5);
+			color: white;
+			padding: 15px;
+			cursor: pointer;
+			border: none;
+			font-size: 20px;
+			z-index: 10;
+			border-radius: 50%;
+			margin: 0 10px;
+		}
+
+		.next {
+			right: 0;
+		}
+
+		.prev:hover,
+		.next:hover {
+			background: var(--primary-color);
+		}
+
+		@media (max-width: 768px) {
+			.nav-links {
+				display: none;
+			}
+
+			/* Simplified for this demo */
+		}
+
+
+
+		/* --- KNOWLEDGE GRID STYLING --- */
+		.knowledge-grid {
+			padding: 80px 0;
+			background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1b 100%);
+		}
+
+		.knowledge-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 30px;
+			perspective: 1000px;
+		}
+
+		.knowledge-card {
+			background: rgba(255, 255, 255, 0.03);
+			backdrop-filter: blur(10px);
+
+			/* Frosted Glass Effect */
+			border: 1px solid rgba(255, 215, 0, 0.1);
+			padding: 40px;
+			border-radius: 20px;
+			transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		/* Glowing Border on Hover */
+		.knowledge-card:hover {
+			transform: translateY(-10px) rotateX(5deg);
+			border-color: var(--gold);
+			box-shadow: 0 15px 40px rgba(103, 58, 183, 0.3);
+			background: rgba(255, 255, 255, 0.07);
+		}
+
+		.card-icon {
+			font-size: 3rem;
+			margin-bottom: 20px;
+			filter: drop-shadow(0 0 10px var(--primary));
+		}
+
+		.knowledge-card h3 {
+			color: var(--gold);
+			font-size: 1.5rem;
+			margin-bottom: 15px;
+			border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+			padding-bottom: 10px;
+		}
+
+		.knowledge-card p {
+			line-height: 1.8;
+			color: #ccc;
+			font-size: 1.05rem;
+		}
+
+		/* Full Width for PLR section */
+		.full-width {
+			grid-column: 1 / -1;
+			text-align: center;
+			border: 1px dashed var(--gold);
+		}
+
+		/* Animation Classes */
+		.from-bottom {
+			transform: translateY(50px);
+			opacity: 0;
+			transition: 1s;
+		}
+
+		.from-bottom.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+		/* --- VIDEO FEEDBACK STYLES --- */
+		.feedback-section {
+			padding: 100px 5%;
+			background: linear-gradient(to bottom, #0f0f1b, #1a1a2e);
+			text-align: center;
+		}
+
+		.section-subtitle {
+			color: #aaa;
+			margin-bottom: 50px;
+			font-size: 1.1rem;
+		}
+
+		.feedback-grid {
+			display: flex;
+			flex-direction: column;
+			gap: 40px;
+
+			margin: 0 auto;
+		}
+
+		.video-card {
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 20px;
+			overflow: hidden;
+			border: 1px solid rgba(255, 215, 0, 0.1);
+			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+		}
+
+		/* Hover Effect: The Card Glows and Pops Out */
+		.video-card:hover {
+			transform: scale(1.05);
+			border-color: var(--gold);
+			box-shadow: 0 20px 50px rgba(103, 58, 183, 0.4);
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.video-wrapper {
+			position: relative;
+			width: 100%;
+			aspect-ratio: 16 / 9;
+		}
+
+		.video-wrapper iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		.video-info {
+			padding: 25px;
+			text-align: left;
+		}
+
+		.video-info h4 {
+			color: var(--gold);
+			margin: 0 0 10px 0;
+			font-size: 1.3rem;
+		}
+
+		.video-info p {
+			color: #ddd;
+			font-style: italic;
+			font-size: 0.95rem;
+			margin-bottom: 15px;
+			line-height: 1.5;
+		}
+
+		.student-name {
+			color: var(--primary);
+			font-weight: bold;
+			display: block;
+			text-align: right;
+			font-size: 0.9rem;
+			letter-spacing: 1px;
+		}
+
+		/* Re-using your Animation Classes */
+		.from-bottom {
+			transform: translateY(50px);
+			opacity: 0;
+			transition: 1s ease-out;
+		}
+
+		.from-bottom.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+
+
+		/* --- ASTROLOGY SECTION STYLES --- */
+		.astrology-section {
+			padding: 100px 5%;
+			background: radial-gradient(circle at top right, #1a1a2e, #05050a);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.astro-badge {
+			color: var(--gold);
+			border: 1px solid var(--gold);
+			display: inline-block;
+			padding: 5px 15px;
+			border-radius: 20px;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			margin-bottom: 15px;
+			letter-spacing: 2px;
+		}
+
+		.astro-layout {
+			display: flex;
+			align-items: center;
+			gap: 50px;
+			flex-wrap: wrap;
+			margin-top: 40px;
+		}
+
+		.astro-visual {
+			flex: 1;
+			min-width: 300px;
+			display: flex;
+			justify-content: center;
+		}
+
+		/* Rotating Zodiac Animation */
+		.zodiac-circle {
+			width: 250px;
+			height: 250px;
+			border: 2px dashed rgba(255, 193, 7, 0.3);
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			animation: rotateCircle 20s linear infinite;
+		}
+
+		.inner-circle {
+			width: 150px;
+			height: 150px;
+			background: rgba(103, 58, 183, 0.2);
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 3rem;
+			box-shadow: 0 0 50px rgba(103, 58, 183, 0.5);
+			animation: pulseGlow 3s ease-in-out infinite alternate;
+		}
+
+		@keyframes rotateCircle {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes pulseGlow {
+			from {
+				transform: scale(1);
+				box-shadow: 0 0 20px rgba(103, 58, 183, 0.3);
+			}
+
+			to {
+				transform: scale(1.1);
+				box-shadow: 0 0 60px rgba(255, 193, 7, 0.4);
+			}
+		}
+
+		.astro-content {
+			flex: 1.5;
+			min-width: 300px;
+			text-align: left;
+		}
+
+		.astro-card {
+			background: rgba(255, 255, 255, 0.05);
+			color: wheat;
+			padding: 40px;
+			border-radius: 30px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.astro-list {
+			list-style: none;
+			padding: 0;
+			margin: 25px 0;
+		}
+
+		.astro-list li {
+			margin-bottom: 15px;
+			font-size: 1.1rem;
+			color: #ddd;
+		}
+
+		.astro-btn {
+			display: inline-block;
+			padding: 12px 30px;
+			background: var(--gold);
+			color: black;
+			text-decoration: none;
+			font-weight: bold;
+			border-radius: 50px;
+			transition: 0.3s;
+		}
+
+		.astro-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+		}
+
+		/* Mobile responsive fixes */
+		@media (max-width: 768px) {
+			.astro-layout {
+				flex-direction: column;
+				text-align: center;
+			}
+
+			.astro-content {
+				text-align: center;
+			}
+		}
