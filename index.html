@@ -6,6 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sadhana Seva - Navigation</title>
 	<link href="styles.css" rel="stylesheet">
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+	<script type="text/javascript">
+		(function () {
+			// PASTE YOUR ACTUAL PUBLIC KEY HERE
+			emailjs.init("DvEF0taWyWr6eA0Rb");
+		})();
+	</script>
+
 </head>
 
 <body>
@@ -91,6 +100,85 @@
 				<div class="astro-layout">
 					<div class="astro-visual from-left">
 						<div class="zodiac-circle">
+							<div class="inner-circle"><span>✨</span></div>
+						</div>
+					</div>
+
+					<div class="astro-content">
+
+						<div class="astro-card">
+							<h3>আপনার ভাগ্য কি আপনার হাতে?</h3>
+							<p>জ্যোতিষশাস্ত্র কেবল গণনা নয়, এটি একটি মহাজাগতিক মানচিত্র। আমাদের ইনার ইঞ্জিনিয়ারিং কোর্সের মাধ্যমে
+								আপনি শিখবেন কিভাবে গ্রহের নেতিবাচক প্রভাব কাটিয়ে নিজের ইচ্ছাশক্তিকে জাগ্রত করতে হয়।</p>
+
+							<ul class="astro-list">
+								<li>🌟 <strong>কোষ্ঠী বিচার:</strong> আপনার জীবনের সঠিক দিকনির্দেশনা।</li>
+								<li>🪐 <strong>গ্রহের দশা মুক্তি:</strong> নেতিবাচক শক্তি থেকে সুরক্ষা।</li>
+								<li>🌙 <strong>মনস্তাত্ত্বিক জ্যোতিষ:</strong> মনের ওপর চন্দ্রের প্রভাব নিয়ন্ত্রণ।</li>
+							</ul>
+
+						</div>
+						<div class="astro-card">
+							<h3>আপনার বিবরণ প্রদান করুন</h3>
+
+							<form id="astroForm" class="astro-form">
+								<div class="form-group">
+									<input type="text" id="userName" placeholder="আপনার নাম" required>
+								</div>
+								<div class="form-row">
+									<input type="date" id="birthDate" required title="জন্ম তারিখ">
+									<input type="time" id="birthTime" required title="জন্ম সময়">
+								</div>
+								<div class="form-group">
+									<input type="text" id="birthPlace" placeholder="জন্মস্থান (শহর/গ্রাম)" required>
+								</div>
+								<div class="form-group">
+									<input type="text" id="whnum" placeholder="whatsapp Number" required>
+								</div>
+								<ul class="astro-list">
+									<li>🌟 কোষ্ঠী বিচার ও সঠিক দিকনির্দেশনা।</li>
+									<li>🪐 নেতিবাচক গ্রহের দশা থেকে মুক্তি।</li>
+								</ul>
+								<div id="successModal" class="modal-overlay">
+									<div class="payment-card" style="border-top: 5px solid var(--gold);">
+										<div class="card-icon">🙏</div>
+										<h3 style="color: var(--gold);">পেমেন্ট সফল হয়েছে!</h3>
+
+										<div class="success-message">
+											<p>আপনার তথ্য আমাদের কাছে পৌঁছেছে।</p>
+											<p><strong>একটু অপেক্ষা করুন, আমরা আপনার হোয়াটসঅ্যাপে সেরা সমাধানটি দিচ্ছি।</strong></p>
+										</div>
+
+										<div class="wait-indicator">
+											<div class="dot"></div>
+											<div class="dot"></div>
+											<div class="dot"></div>
+										</div>
+
+										<!--<a id="whatsappFinalLink" href="#" class="pay-option whatsapp">
+											সরাসরি আমাদের সাথে কথা বলুন
+										</a>-->
+									</div>
+								</div>
+								<button type="button" class="astro-btn" onclick="processAstroPayment()">
+									পেমেন্ট করুন ও বিশ্লেষণ শুরু করুন
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<!--<section class="astrology-section" id="astrology">
+			<div class="container">
+				<div class="astro-badge">Cosmic Wisdom</div>
+				<h2 class="section-title">বৈদিক জ্যোতিষশাস্ত্র ও আপনার ভবিষ্যৎ</h2>
+
+				<div class="astro-layout">
+					<div class="astro-visual from-left">
+						<div class="zodiac-circle">
 							<div class="inner-circle">
 								<span>✨</span>
 							</div>
@@ -109,12 +197,12 @@
 								<li>🌙 <strong>মনস্তাত্ত্বিক জ্যোতিষ:</strong> মনের ওপর চন্দ্রের প্রভাব নিয়ন্ত্রণ।</li>
 							</ul>
 
-							<a href="#booking" class="astro-btn">জন্মছক বিশ্লেষণ করুন</a>
+							<button type="button" class="astro-btn" onclick="payNow()">জন্মছক বিশ্লেষণ করুন</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</section>-->
 
 		<div class="container">
 

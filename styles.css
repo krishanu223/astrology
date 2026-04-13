@@ -660,3 +660,86 @@
 				text-align: center;
 			}
 		}
+
+
+		.astro-form {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			margin-top: 20px;
+		}
+
+
+		.astro-form input {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 215, 0, 0.2);
+			padding: 12px 15px;
+			border-radius: 8px;
+			color: white;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 1rem;
+		}
+
+		.astro-form input:focus {
+			outline: none;
+			border-color: var(--gold);
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+
+
+
+		.form-row>input {
+			margin-top: 10px;
+		}
+
+		input::-webkit-calendar-picker-indicator {
+			filter: invert(1);
+		}
+
+		.success-message {
+			margin: 20px 0;
+			line-height: 1.6;
+			color: #eee;
+		}
+
+		#successModal {
+			display: none;
+		}
+
+		.wait-indicator {
+			display: flex;
+			justify-content: center;
+			gap: 8px;
+			margin-bottom: 20px;
+		}
+
+		.dot {
+			width: 8px;
+			height: 8px;
+			background-color: var(--gold);
+			border-radius: 50%;
+			animation: bounce 1.4s infinite ease-in-out both;
+		}
+
+		.dot:nth-child(1) {
+			animation-delay: -0.32s;
+		}
+
+		.dot:nth-child(2) {
+			animation-delay: -0.16s;
+		}
+
+		@keyframes bounce {
+
+			0%,
+			80%,
+			100% {
+				transform: scale(0);
+			}
+
+			40% {
+				transform: scale(1.0);
+			}
+		}
