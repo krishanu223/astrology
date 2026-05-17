@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hypno Rishi - Book Your Seat</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--bg-color: #0d0d21;
+			--card-bg: rgba(255, 255, 255, 0.03);
+			--gold: #ffd700;
+			--text-color: #ffffff;
+			--border-color: rgba(255, 215, 0, 0.2);
+			--input-bg: rgba(255, 255, 255, 0.05);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Roboto, sans-serif;
+		}
+
+		body {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			padding: 20px;
+		}
+
+		.booking-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border-color);
+			backdrop-filter: blur(10px);
+			width: 100%;
+			max-width: 450px;
+			padding: 30px;
+			border-radius: 12px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+		}
+
+		.booking-card h2 {
+			color: var(--gold);
+			text-align: center;
+			margin-bottom: 10px;
+			font-size: 1.6rem;
+		}
+
+		.booking-card p.subtitle {
+			text-align: center;
+			color: #88889b;
+			font-size: 0.9rem;
+			margin-bottom: 25px;
+		}
+
+		.price-tag {
+			background: rgba(255, 215, 0, 0.1);
+			border: 1px dashed var(--gold);
+			padding: 10px;
+			text-align: center;
+			border-radius: 6px;
+			font-weight: bold;
+			color: var(--gold);
+			margin-bottom: 20px;
+			font-size: 1.1rem;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.input-group {
+			position: relative;
+		}
+
+		.input-group i {
+			position: absolute;
+			left: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #666;
+		}
+
+		input[type="text"],
+		input[type="email"],
+		input[type="tel"] {
+			width: 100%;
+			padding: 12px 12px 12px 40px;
+			background: var(--input-bg);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 6px;
+			color: var(--text-color);
+			font-size: 0.95rem;
+			outline: none;
+			transition: 0.3s;
+		}
+
+		input:focus {
+			border-color: var(--gold);
+			background: rgba(255, 255, 255, 0.08);
+			box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+		}
+
+		button {
+			background: var(--gold);
+			color: #000;
+			border: none;
+			padding: 14px;
+			font-size: 1rem;
+			font-weight: bold;
+			border-radius: 6px;
+			cursor: pointer;
+			text-transform: uppercase;
+			transition: 0.2s;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+		}
+
+		button:hover:not(:disabled) {
+			background: #ffe240;
+			box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+		}
+
+		button:disabled {
+			background: #555 !important;
+			color: #aaa !important;
+			cursor: not-allowed;
+		}
+	</style>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+	<div class="booking-card">
+		<h2><i class="fas fa-chair"></i> Seat Booking</h2>
+		<p class="subtitle">আপনার আসনটি নিশ্চিত করতে তথ্যগুলো পূরণ করুন</p>
+
+		<div class="price-tag" id="displayPriceBox"><i class="fas fa-spinner fa-spin"></i> মূল্য লোড হচ্ছে...</div>
+
+		<form id="bookingForm">
+			<div class="input-group">
+				<i class="fas fa-user"></i>
+				<input type="text" id="bName" placeholder="Full Name" required>
+			</div>
+
+			<div class="input-group">
+				<i class="fas fa-envelope"></i>
+				<input type="email" id="bEmail" placeholder="Email Address" required>
+			</div>
+
+			<div class="input-group">
+				<i class="fas fa-phone"></i>
+				<input type="tel" id="bPhone" placeholder="WhatsApp Number (10-digit)" pattern="[0-9]{10}" required>
+			</div>
+
+			<button type="submit" id="payBtn" disabled><i class="fas fa-spinner fa-spin"></i> Loading Price...</button>
+		</form>
+	</div>
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+		import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+		import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyAWSP0h6GdY-JZvh0X0hk6Pk6F8ZiFc3kg",
+			authDomain: "astrology-8d207.firebaseapp.com",
+			projectId: "astrology-8d207",
+			storageBucket: "astrology-8d207.firebasestorage.app",
+			messagingSenderId: "473083037288",
+			appId: "1:473083037288:web:72f71ebeb829da87fe9ddd",
+			measurementId: "G-S48PVV3H7N"
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+		const auth = getAuth(app);
+
+		// গ্লোবাল ভেরিয়েবল যা ডাটাবেস থেকে আপডেট হবে
+		let bookingAmount = 0;
+		const adminWhatsAppNumber = "917585960255"; // **এখানে আপনার সঠিক নাম্বারটি দিন**
+
+		// ইংরেজী সংখ্যাকে বাংলা সংখ্যায় কনভার্ট করার হেল্পার ফাংশন
+		function convertToBengaliNumber(num) {
+			const bengaliDigits = { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+			return num.toString().split('').map(digit => bengaliDigits[digit] || digit).join('');
+		}
+
+		// ডাটাবেস থেকে বুকিং প্রাইস নিয়ে আসা
+		async function fetchBookingPrice() {
+			const priceBox = document.getElementById('displayPriceBox');
+			const payBtn = document.getElementById('payBtn');
+			try {
+				const docRef = doc(db, "settings", "booking_config");
+				const docSnap = await getDoc(docRef);
+
+				if (docSnap.exists() && docSnap.data().seatPrice) {
+					bookingAmount = Number(docSnap.data().seatPrice);
+					const bengaliPrice = convertToBengaliNumber(bookingAmount);
+
+					// ইন্টারফেস আপডেট
+					priceBox.innerHTML = `বুকিং মূল্য: ₹${bengaliPrice} / Seat`;
+					payBtn.innerHTML = `<i class="fas fa-credit-card"></i> Pay & Book Now`;
+					payBtn.disabled = false; // প্রাইস চলে আসলে বাটন একটিভ হবে
+				} else {
+					// কোনো কারণে ফিল্ড বা ডকুমেন্ট না থাকলে ডিফল্ট ৫০০ সেট করা হবে
+					bookingAmount = 500;
+					priceBox.innerHTML = `বুকিং মূল্য: ₹৫০০ / Seat`;
+					payBtn.innerHTML = `<i class="fas fa-credit-card"></i> Pay & Book Now`;
+					payBtn.disabled = false;
+				}
+			} catch (err) {
+				console.error("Error fetching price: ", err);
+				priceBox.innerHTML = `<span style="color: #dc3545;">মূল্য লোড করা যায়নি!</span>`;
+			}
+		}
+
+		// পেজ লোড হবার পর প্রথমে প্রাইস তুলে আনা
+		fetchBookingPrice();
+
+		// ইউজার যদি লগইন থাকে তবে ফর্ম অটো-ফিল করার নিয়ম
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				if (user.displayName) document.getElementById('bName').value = user.displayName;
+				if (user.email) document.getElementById('bEmail').value = user.email;
+			}
+		});
+
+		document.getElementById('bookingForm').addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			// অ্যামাউন্ট জিরো বা লোড না হলে পেমেন্ট শুরু হবে না
+			if (!bookingAmount || bookingAmount <= 0) {
+				alert("বুকিং মূল্য সঠিকভাবে লোড হয়নি। অনুগ্রহ করে পেজটি রিফ্রেশ করুন।");
+				return;
+			}
+
+			const nameVal = document.getElementById('bName').value;
+			const emailVal = document.getElementById('bEmail').value;
+			const phoneVal = document.getElementById('bPhone').value;
+			const payBtn = document.getElementById('payBtn');
+
+			// পেমেন্ট চলাকালীন বোতাম নিষ্ক্রিয় করা
+			payBtn.innerText = "Processing...";
+			payBtn.disabled = true;
+
+			// Razorpay পেমেন্ট গেটওয়ে অপশনসমূহ
+			const options = {
+				"key": "rzp_test_SctD70Wol2OPE6",
+				"amount": bookingAmount * 100, // ডাইনামিক অ্যামাউন্টকে পয়সায় কনভার্ট করা
+				"currency": "INR",
+				"name": "Hypno Rishi",
+				"description": "Event Seat Booking",
+				"prefill": {
+					"name": nameVal,
+					"email": emailVal,
+					"contact": phoneVal
+				},
+				"handler": async function (response) {
+					try {
+						// ১. পেমেন্ট সফল হলে ফায়ারস্টোরের 'bookings' কালেকশনে ডাটা সেভ করা
+						await addDoc(collection(db, "bookings"), {
+							name: nameVal,
+							email: emailVal,
+							whatsApp: phoneVal,
+							paymentId: response.razorpay_payment_id,
+							amountPaid: bookingAmount, // ডাইনামিক প্রাইস সেভ হবে
+							status: "Confirmed",
+							timestamp: Date.now()
+						});
+
+						alert("বুকিং সফল হয়েছে! এখন আপনাকে হোয়াটসঅ্যাপে রিডাইরেক্ট করা হচ্ছে...");
+
+						// ২. হোয়াটসঅ্যাপ মেসেজ ফরম্যাট তৈরি
+						const message = `নমস্কার Hypno Rishi, আমি সফলভাবে একটি আসন বুক করেছি।\n\n*বুকিংয়ের বিবরণ:*\n📝 নাম: ${nameVal}\n📧 ইমেল: ${emailVal}\n📞 হোয়াটসঅ্যাপ: ${phoneVal}\n💳 পেমেন্ট আইডি: ${response.razorpay_payment_id}\n💰 পরিশোধিত মূল্য: ₹${bookingAmount}\n\nঅনুগ্রহ করে আমার বুকিংটি চেক করুন। ধন্যবাদ!`;
+						const encodedMessage = encodeURIComponent(message);
+
+						// হোয়াটসঅ্যাপ চ্যাট লিংক তৈরি এবং রিডাইরেক্ট
+						const whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
+						window.location.href = whatsappURL;
+
+					} catch (error) {
+						console.error("Booking Save Error: ", error);
+						alert("পেমেন্ট সফল হলেও ডাটা সেভ করতে সমস্যা হয়েছে: " + error.message);
+					}
+				},
+				"modal": {
+					"ondismiss": function () {
+						// ইউজার পেমেন্ট উইন্ডো কেটে দিলে বোতাম আবার সচল করা
+						payBtn.innerHTML = `<i class="fas fa-credit-card"></i> Pay & Book Now`;
+						payBtn.disabled = false;
+					}
+				},
+				"theme": { "color": "#0d0d21" }
+			};
+
+			const rzp = new Razorpay(options);
+			rzp.open();
+		});
+	</script>
+</body>
+
+</html>

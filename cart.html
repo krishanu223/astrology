@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Your Cart - Hypno Rishi</title>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+</head>
+
+<body class="shop-page">
+
+	<!-- Replace your current container section with this updated structure -->
+	<div class="container cart-container">
+		<h2 class="section-title"><i class="fas fa-shopping-basket"></i> আপনার ঝুলি (Cart)</h2>
+
+		<div class="cart-layout">
+			<!-- Left Column: Items and Address Form -->
+			<div class="cart-left-col">
+				<!-- Items List Container -->
+				<div class="cart-items" id="cart-list">
+					<p class="loader">আপনার ঝুলি পরীক্ষা করা হচ্ছে...</p>
+				</div>
+
+				<!-- Shipping Address Form Card -->
+				<div class="address-card">
+					<h3><i class="fas fa-truck"></i> ডেলিভারি ঠিকানা (Shipping Address)</h3>
+					<form id="shipping-form">
+						<div class="form-row">
+							<input type="text" id="ship-name" placeholder="আপনার সম্পূর্ণ নাম (Full Name)" required>
+							<input type="tel" id="ship-phone" placeholder="মোবাইল নম্বর (10-digit Phone)" pattern="[0-9]{10}"
+								required>
+						</div>
+						<input type="text" id="ship-address" placeholder="ফ্ল্যাট, বাড়ি নম্বর, রাস্তা (Address Line 1)" required>
+						<div class="form-row">
+							<input type="text" id="ship-city" placeholder="শহর/গ্রাম (City)" required>
+							<input type="text" id="ship-state" placeholder="রাজ্য (State)" required>
+							<input type="text" id="ship-pin" placeholder="পিনকোড (6-digit PIN)" pattern="[0-9]{6}" required>
+						</div>
+
+						<!-- NEW ACTION BUTTON AREA -->
+						<div class="address-actions">
+							<button type="button" class="save-address-btn" onclick="window.saveAddressOnly()">
+								<i class="fas fa-save"></i> ঠিকানা সংরক্ষণ করুন (Save Address)
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Right Column: Order Summary -->
+			<div class="cart-summary">
+				<h3>অর্ডার সারসংক্ষেপ</h3>
+				<div class="summary-row">
+					<span>মোট সামগ্রী:</span>
+					<span id="total-count">0</span>
+				</div>
+				<div class="summary-row total">
+					<span>মোট মূল্য:</span>
+					<span id="total-price">₹0</span>
+				</div>
+				<button class="checkout-btn" onclick="window.processCartCheckout()">পেমেন্ট করুন (Checkout)</button>
+				<a href="products.html" class="continue-link">আরো কেনাকাটা করুন</a>
+			</div>
+		</div>
+	</div>
+
+	<script type="module" src="cart.js"></script>
+</body>
+
+</html>

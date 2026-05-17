@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hypno Rishi - Advanced Master Dashboard</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<style>
+		:root {
+			--bg-color: #090914;
+			--sidebar-bg: #0d0d21;
+			--card-bg: rgba(255, 255, 255, 0.03);
+			--gold: #ffd700;
+			--text-color: #ffffff;
+			--text-muted: #88889b;
+			--border-color: rgba(255, 215, 0, 0.15);
+			--input-bg: rgba(255, 255, 255, 0.05);
+			--success: #28a745;
+			--danger: #dc3545;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Roboto, sans-serif;
+		}
+
+		body {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			display: flex;
+			min-height: 100vh;
+			overflow: hidden;
+		}
+
+		/* সাইডবার */
+		.sidebar {
+			width: 260px;
+			background: var(--sidebar-bg);
+			border-right: 1px solid var(--border-color);
+			display: flex;
+			flex-direction: column;
+			padding: 20px 0;
+		}
+
+		.sidebar-brand {
+			padding: 10px 25px 25px 25px;
+			font-size: 1.4rem;
+			font-weight: bold;
+			color: var(--gold);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+			margin-bottom: 20px;
+		}
+
+		.sidebar-menu {
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			padding: 0 10px;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 14px 15px;
+			color: #bbb;
+			text-decoration: none;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 0.95rem;
+			transition: 0.2s;
+		}
+
+		.menu-item:hover,
+		.menu-item.active {
+			background: rgba(255, 215, 0, 0.05);
+			color: var(--gold);
+		}
+
+		.menu-item.active {
+			background: var(--gold);
+			color: #000;
+			font-weight: bold;
+		}
+
+		/* মেইন কন্টেন্ট এরিয়া */
+		.main-content {
+			flex: 1;
+			padding: 40px;
+			overflow-y: auto;
+			height: 100vh;
+		}
+
+		.tab-panel {
+			display: none;
+			animation: fadeIn 0.3s ease;
+		}
+
+		.tab-panel.active {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		.panel-header {
+			color: var(--gold);
+			margin-bottom: 25px;
+			font-size: 1.6rem;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			padding-bottom: 15px;
+		}
+
+		/* ফর্ম বক্স */
+		.form-box {
+			background: var(--card-bg);
+			border: 1px solid var(--border-color);
+			padding: 30px;
+			border-radius: 12px;
+			max-width: 550px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.form-group-label {
+			color: var(--gold);
+			font-weight: bold;
+			font-size: 0.95rem;
+			margin-bottom: 4px;
+		}
+
+		input[type="text"],
+		input[type="number"],
+		textarea {
+			width: 100%;
+			padding: 12px;
+			background: var(--input-bg);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 6px;
+			color: var(--text-color);
+			font-size: 0.95rem;
+			outline: none;
+		}
+
+		textarea {
+			min-height: 80px;
+			resize: vertical;
+		}
+
+		input:focus,
+		textarea:focus {
+			border-color: var(--gold);
+		}
+
+		button.main-btn {
+			background: var(--gold);
+			color: #000;
+			border: none;
+			padding: 13px;
+			font-size: 1rem;
+			font-weight: bold;
+			border-radius: 6px;
+			cursor: pointer;
+			text-transform: uppercase;
+			margin-top: 10px;
+		}
+
+		button.main-btn:hover {
+			background: #ffe240;
+		}
+
+		/* গ্রিড এবং কার্ড */
+		.cards-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: 20px;
+		}
+
+		.data-card {
+			background: var(--card-bg);
+			border: 1px solid rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			padding: 18px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.product-img-preview {
+			width: 100%;
+			height: 160px;
+			object-fit: cover;
+			border-radius: 6px;
+			margin-bottom: 12px;
+			background: #14142b;
+			border: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.card-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+			font-size: 0.85rem;
+			color: #888;
+		}
+
+		.status-badge {
+			padding: 3px 8px;
+			border-radius: 4px;
+			font-weight: bold;
+			font-size: 0.75rem;
+		}
+
+		.status-confirmed,
+		.status-processing {
+			background: rgba(255, 165, 0, 0.15);
+			color: #ffa500;
+		}
+
+		.status-shipped,
+		.status-clear {
+			background: rgba(40, 167, 69, 0.15);
+			color: #28a745;
+		}
+
+		.info-block {
+			font-size: 0.9rem;
+			line-height: 1.5;
+			color: #ddd;
+		}
+
+		.card-bottom {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 15px;
+			padding-top: 10px;
+			border-top: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.action-btn {
+			padding: 6px 12px;
+			font-size: 0.8rem;
+			border: none;
+			border-radius: 4px;
+			font-weight: bold;
+			cursor: pointer;
+			color: white;
+		}
+
+		.btn-ship,
+		.btn-clear {
+			background: var(--success);
+		}
+
+		.btn-clear-red,
+		.btn-delete {
+			background: var(--danger);
+		}
+
+		.btn-delete:hover {
+			background: #bd2130;
+		}
+	</style>
+</head>
+
+<body>
+
+	<nav class="sidebar">
+		<div class="sidebar-brand"><i class="fas fa-user-shield"></i> Master Dashboard</div>
+		<ul class="sidebar-menu">
+			<li class="menu-item active" onclick="switchTab('add-product-tab')"><i class="fas fa-plus-circle"></i> Add Product
+			</li>
+			<li class="menu-item" onclick="switchTab('manage-products-tab')"><i class="fas fa-tasks"></i> Manage Products</li>
+			<li class="menu-item" onclick="switchTab('ecommerce-orders-tab')"><i class="fas fa-shopping-cart"></i> E-Commerce
+				Orders</li>
+			<li class="menu-item" onclick="switchTab('seat-bookings-tab')"><i class="fas fa-chair"></i> Event Bookings</li>
+			<li class="menu-item" onclick="switchTab('astrology-requests-tab')"><i class="fas fa-star-of-david"></i> Astrology
+				Requests</li>
+			<li class="menu-item" onclick="switchTab('settings-tab')"><i class="fas fa-cogs"></i> Settings</li>
+		</ul>
+	</nav>
+
+	<main class="main-content">
+
+		<section id="add-product-tab" class="tab-panel active">
+			<h2 class="panel-header"><i class="fas fa-box-open"></i> Add Product & Stock</h2>
+			<div class="form-box">
+				<form id="addProductForm">
+					<input type="text" id="pName" placeholder="Product Name" required>
+					<input type="number" id="pPrice" placeholder="Price (INR)" required>
+					<input type="number" id="pQty" placeholder="Available Quantity / Stock" min="0" required>
+					<input type="text" id="pImgUrl" placeholder="Image URL Link" required>
+					<textarea id="pDesc" placeholder="Product Description"></textarea>
+					<button type="submit" class="main-btn">Upload Product</button>
+				</form>
+			</div>
+		</section>
+
+		<section id="manage-products-tab" class="tab-panel">
+			<h2 class="panel-header"><i class="fas fa-boxes"></i> All Registered Products</h2>
+			<div id="adminProductsContainer" class="cards-grid">
+				<p style="color: #888;"><i class="fas fa-spinner fa-spin"></i> প্রোডাক্ট তালিকা লোড হচ্ছে...</p>
+			</div>
+		</section>
+
+		<section id="ecommerce-orders-tab" class="tab-panel">
+			<h2 class="panel-header"><i class="fas fa-shopping-cart"></i> Customer Orders</h2>
+			<div id="adminOrdersContainer" class="cards-grid">
+				<p style="color: #888;"><i class="fas fa-spinner fa-spin"></i> অর্ডার তালিকা লোড হচ্ছে...</p>
+			</div>
+		</section>
+
+		<section id="seat-bookings-tab" class="tab-panel">
+			<h2 class="panel-header"><i class="fas fa-chair"></i> Event Booking Details</h2>
+			<div id="adminBookingsContainer" class="cards-grid">
+				<p style="color: #888;"><i class="fas fa-spinner fa-spin"></i> বুকিং তালিকা লোড হচ্ছে...</p>
+			</div>
+		</section>
+
+		<section id="astrology-requests-tab" class="tab-panel">
+			<h2 class="panel-header"><i class="fas fa-star-of-david"></i> Astrology Client Consultations</h2>
+			<div id="adminAstrologyContainer" class="cards-grid">
+				<p style="color: #888;"><i class="fas fa-spinner fa-spin"></i> অ্যাস্ট্রোলজি ডেটা লোড হচ্ছে...</p>
+			</div>
+		</section>
+
+		<section id="settings-tab" class="tab-panel">
+			<h2 class="panel-header"><i class="fas fa-cogs"></i> System Price Configuration</h2>
+			<div class="form-box">
+				<form id="settingsForm">
+					<div class="form-group">
+						<div class="form-group-label">Set Seat Booking Price (INR):</div>
+						<input type="number" id="bookingPriceInput" placeholder="Enter seat price (e.g., 500)" min="1" required>
+					</div>
+					<div class="form-group" style="margin-top: 15px;">
+						<div class="form-group-label">Set Astrology Consultation Fee (INR):</div>
+						<input type="number" id="astroPriceInput" placeholder="Enter astrology fee (e.g., 500)" min="1" required>
+					</div>
+					<button type="submit" class="main-btn">Save Configurations</button>
+				</form>
+			</div>
+		</section>
+
+	</main>
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+		import {
+			getFirestore, collection, addDoc, collectionGroup, query, orderBy, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc
+		} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyAWSP0h6GdY-JZvh0X0hk6Pk6F8ZiFc3kg",
+			authDomain: "astrology-8d207.firebaseapp.com",
+			projectId: "astrology-8d207",
+			storageBucket: "astrology-8d207.firebasestorage.app",
+			messagingSenderId: "473083037288",
+			appId: "1:473083037288:web:72f71ebeb829da87fe9ddd",
+			measurementId: "G-S48PVV3H7N"
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+
+		// নেভিগেশন কন্ট্রোল
+		window.switchTab = (tabId) => {
+			document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+			document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+			document.getElementById(tabId).classList.add('active');
+			event.currentTarget.classList.add('active');
+
+			if (tabId === 'manage-products-tab') loadAllProducts();
+			if (tabId === 'ecommerce-orders-tab') loadAllOrders();
+			if (tabId === 'seat-bookings-tab') loadAllBookings();
+			if (tabId === 'astrology-requests-tab') loadAllAstrologyRequests();
+			if (tabId === 'settings-tab') loadCurrentSettings();
+		};
+
+		// ==========================================
+		// ৫. সেটিংস হ্যান্ডলার (বুকিং প্রাইস ও অ্যাস্ট্রোলজি ফি)
+		// ==========================================
+		async function loadCurrentSettings() {
+			try {
+				const docRef = doc(db, "settings", "booking_config");
+				const docSnap = await getDoc(docRef);
+				if (docSnap.exists()) {
+					const data = docSnap.data();
+					if (data.seatPrice) document.getElementById('bookingPriceInput').value = data.seatPrice;
+					if (data.astroPrice) document.getElementById('astroPriceInput').value = data.astroPrice;
+				}
+			} catch (err) { console.error("Error loading settings: ", err); }
+		}
+
+		document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const saveBtn = e.target.querySelector('button[type="submit"]');
+			saveBtn.innerText = "Saving..."; saveBtn.disabled = true;
+
+			const newSeatPrice = Number(document.getElementById('bookingPriceInput').value);
+			const newAstroPrice = Number(document.getElementById('astroPriceInput').value);
+
+			try {
+				await setDoc(doc(db, "settings", "booking_config"), {
+					seatPrice: newSeatPrice,
+					astroPrice: newAstroPrice,
+					lastUpdated: Date.now()
+				}, { merge: true }); // merge true রাখলে আগের ডেটা ডিলিট হবে না
+				alert("All system prices updated successfully!");
+			} catch (err) { alert("Error saving settings: " + err.message); }
+			finally { saveBtn.innerText = "Save Configurations"; saveBtn.disabled = false; }
+		});
+
+		// ==========================================
+		// ১. প্রোডাক্ট আপলোড লজিক
+		// ==========================================
+		document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const submitBtn = e.target.querySelector('button[type="submit"]');
+			submitBtn.innerText = "Processing..."; submitBtn.disabled = true;
+
+			const pName = document.getElementById('pName').value;
+			const pPrice = Number(document.getElementById('pPrice').value);
+			const pQty = Number(document.getElementById('pQty').value);
+			const pDesc = document.getElementById('pDesc').value;
+			const pImgUrl = document.getElementById('pImgUrl').value;
+
+			try {
+				await addDoc(collection(db, "products"), {
+					name: pName,
+					price: pPrice,
+					qty: pQty,
+					image: pImgUrl,
+					desc: pDesc,
+					timestamp: Date.now()
+				});
+				alert("Product added successfully!");
+				e.target.reset();
+			} catch (err) { alert("Error: " + err.message); }
+			finally { submitBtn.innerText = "Upload Product"; submitBtn.disabled = false; }
+		});
+
+		// ==========================================
+		// ২. সমস্ত প্রোডাক্ট দেখা এবং ডিলিট লজিক
+		// ==========================================
+		async function loadAllProducts() {
+			const container = document.getElementById('adminProductsContainer');
+			try {
+				const q = query(collection(db, "products"), orderBy("timestamp", "desc"));
+				const snapshot = await getDocs(q);
+				if (snapshot.empty) { container.innerHTML = '<p style="color:#888;">কোনো প্রোডাক্ট পাওয়া যায়নি।</p>'; return; }
+
+				let html = '';
+				snapshot.forEach(docSnap => {
+					const product = docSnap.data(); const pId = docSnap.id;
+					html += `
+            <div class="data-card">
+              <img src="${product.image}" class="product-img-preview" alt="Product Image">
+              <div class="info-block">
+                <h3 style="color:var(--gold); margin-bottom:5px;">${product.name}</h3>
+                <strong>💰 মূল্য:</strong> ₹${product.price}<br>
+                <strong>📦 উপলব্ধ স্টক:</strong> ${product.qty || 0} Pcs
+              </div>
+              <div class="card-bottom" style="justify-content: flex-end;">
+                <button class="action-btn btn-delete" onclick="window.deleteProduct('${pId}')"><i class="fas fa-trash-alt"></i> Delete</button>
+              </div>
+            </div>`;
+				});
+				container.innerHTML = html;
+			} catch (err) { container.innerHTML = `<p style="color:var(--danger);">লোড ব্যর্থ।</p>`; }
+		}
+
+		window.deleteProduct = async (pId) => {
+			if (!confirm("ডিলিট করতে চান?")) return;
+			try { await deleteDoc(doc(db, "products", pId)); loadAllProducts(); } catch (err) { alert(err.message); }
+		};
+
+		// ==========================================
+		// ৩. সিট বুকিং ট্র্যাকিং লজিক
+		// ==========================================
+		async function loadAllBookings() {
+			const container = document.getElementById('adminBookingsContainer');
+			try {
+				const bookingsQuery = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
+				const querySnapshot = await getDocs(bookingsQuery);
+				if (querySnapshot.empty) { container.innerHTML = '<p style="color:#888;">কোনো বুকিং রেকর্ড নেই।</p>'; return; }
+
+				let html = '';
+				querySnapshot.forEach((docSnap) => {
+					const booking = docSnap.data(); const bookingId = docSnap.id;
+					const date = new Date(booking.timestamp).toLocaleDateString('bn-BD', { year: 'numeric', month: 'short', day: 'numeric' });
+					const currentStatus = booking.status || "Confirmed";
+
+					html += `
+            <div class="data-card">
+              <div class="card-top"><span>📅 ${date}</span><span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
+              <div class="info-block">
+                <strong>👤 নাম:</strong> ${booking.name}<br><strong>📞 WhatsApp:</strong> ${booking.whatsApp}
+              </div>
+              <div class="card-bottom">
+                <span>Paid: <strong style="color:var(--gold);">₹${booking.amountPaid}</strong></span>
+                ${currentStatus === "Confirmed" ? `<button class="action-btn btn-clear-red" onclick="window.updateBookingStatus('${bookingId}')">Clear</button>` : `<span>Cleared</span>`}
+              </div>
+            </div>`;
+				});
+				container.innerHTML = html;
+			} catch (error) { console.error(error); }
+		}
+
+		window.updateBookingStatus = async (bookingId) => {
+			try { await updateDoc(doc(db, "bookings", bookingId), { status: "Clear" }); loadAllBookings(); } catch (err) { alert(err.message); }
+		};
+
+		// ==========================================
+		// ৪. ই-কমার্স অর্ডার লিস্ট লোড লজিক
+		// ==========================================
+		async function loadAllOrders() {
+			const container = document.getElementById('adminOrdersContainer');
+			try {
+				const ordersQuery = query(collectionGroup(db, "orders"), orderBy("orderDate", "desc"));
+				const querySnapshot = await getDocs(ordersQuery);
+				if (querySnapshot.empty) { container.innerHTML = '<p style="color:#888;">কোনো অর্ডারের রেকর্ড নেই।</p>'; return; }
+
+				let html = '';
+				querySnapshot.forEach((docSnap) => {
+					const order = docSnap.data(); const docPath = docSnap.ref.path;
+					const orderDate = new Date(order.orderDate).toLocaleDateString('bn-BD', { year: 'numeric', month: 'short', day: 'numeric' });
+					const currentStatus = order.status || "Processing";
+					let itemsHTML = ''; order.items.forEach(item => { itemsHTML += `<div>• ${item.name}</div>`; });
+
+					html += `
+            <div class="data-card">
+              <div class="card-top"><span>📦 ${orderDate}</span><span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
+              <div class="info-block">
+                <strong>গ্রাহক:</strong> ${order.shippingDetails?.name}<br><strong>ঠিকানা:</strong> ${order.shippingDetails?.address}
+                <div style="margin-top:5px; color:#aaa;">${itemsHTML}</div>
+              </div>
+              <div class="card-bottom">
+                <span>Total: <strong style="color:var(--gold);">₹${order.totalPaid}</strong></span>
+                ${currentStatus === "Processing" ? `<button class="action-btn btn-ship" onclick="window.updateToShipped('${docPath}')">Ship</button>` : `<span>Shipped</span>`}
+              </div>
+            </div>`;
+				});
+				container.innerHTML = html;
+			} catch (error) { console.error(error); }
+		}
+
+		window.updateToShipped = async (fullDocPath) => {
+			try { await updateDoc(doc(db, fullDocPath), { status: "Shipped" }); loadAllOrders(); } catch (err) { alert(err.message); }
+		};
+
+		// ==========================================
+		// ৬. অ্যাস্ট্রোলজি ক্লায়েন্ট ডেটা লোড ও স্ট্যাটাস ক্লিয়ার লজিক (NEW)
+		// ==========================================
+		async function loadAllAstrologyRequests() {
+			const container = document.getElementById('adminAstrologyContainer');
+			try {
+				const astroQuery = query(collection(db, "astro_consultations"), orderBy("timestamp", "desc"));
+				const querySnapshot = await getDocs(astroQuery);
+				if (querySnapshot.empty) { container.innerHTML = '<p style="color:#888;">কোনো কোষ্ঠী বিচার বা অ্যাস্ট্রোলজি রেকর্ড নেই।</p>'; return; }
+
+				let html = '';
+				querySnapshot.forEach((docSnap) => {
+					const client = docSnap.data();
+					const clientId = docSnap.id;
+					const reqDate = new Date(client.timestamp).toLocaleDateString('bn-BD', { year: 'numeric', month: 'short', day: 'numeric' });
+					const currentStatus = client.status || "Confirmed";
+
+					html += `
+            <div class="data-card">
+              <div class="card-top">
+                <span>📅 ${reqDate}</span>
+                <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span>
+              </div>
+              <div class="info-block">
+                <h3 style="color:var(--gold); margin-bottom:5px;">👤 ${client.name}</h3>
+                <strong>📅 জন্ম তারিখ:</strong> ${client.birthDate}<br>
+                <strong>⏰ জন্ম সময়:</strong> ${client.birthTime}<br>
+                <strong>📍 জন্মস্থান:</strong> ${client.birthPlace}<br>
+                <strong>📞 WhatsApp:</strong> ${client.whatsApp}<br>
+                <span style="font-size:0.75rem; color:#888;">ID: ${client.paymentId || 'N/A'}</span>
+              </div>
+              <div class="card-bottom">
+                <span>Paid: <strong style="color:var(--gold);">₹${client.amountPaid || 0}</strong></span>
+                ${currentStatus === "Confirmed" ? `<button class="action-btn btn-clear" onclick="window.updateAstroStatus('${clientId}')"><i class="fas fa-check"></i> Clear</button>` : `<span style="color:var(--success); font-weight:bold;">Analysis Done</span>`}
+              </div>
+            </div>`;
+				});
+				container.innerHTML = html;
+			} catch (error) {
+				console.error("Error loading astro data: ", error);
+				container.innerHTML = `<p style="color:var(--danger);">ডাটা লোড করতে সমস্যা হয়েছে।</p>`;
+			}
+		}
+
+		window.updateAstroStatus = async (clientId) => {
+			if (!confirm("এই ক্লায়েন্টের কোষ্ঠী বিচার বিশ্লেষণ কি সম্পূর্ণ হয়েছে?")) return;
+			try {
+				await updateDoc(doc(db, "astro_consultations", clientId), { status: "Clear" });
+				loadAllAstrologyRequests();
+			} catch (err) { alert("Error updating status: " + err.message); }
+		};
+	</script>
+</body>
+
+</html>

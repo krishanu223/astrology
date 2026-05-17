@@ -7,6 +7,9 @@
 	<title>Sadhana Seva - Navigation</title>
 	<link href="styles.css" rel="stylesheet">
 	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 	<script type="text/javascript">
 		(function () {
@@ -23,47 +26,58 @@
 		<nav>
 			<div class="logo">Hypno rishi</div>
 
-			<div class="menu-toggle" id="mobile-menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-
 			<ul class="nav-links" id="nav-list">
 				<li><a href="#home">Home</a></li>
-				<li><a href="#about">About Us</a></li>
-				<li><a href="#sadhana-kit">Sadhana Kit</a></li>
-				<li><a href="#pujosamogri">Pujosamogri</a></li>
-				<li><a href="#contact">Contact</a></li>
-				<li><a href="#ourservice">ourservice</a></li>
-				<li><a href="#booking" class="book-btn">Book a Seat</a></li>
+				<li><a href="about.html">About Us</a></li>
+				<li><a href="products.html">Sadhana Kit</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="privacy.html">Privacy Policy</a></li>
+				<li><a href="booking.html" class="book-btn">Book a Seat</a></li>
 			</ul>
+
+			<div class="nav-actions">
+				<!-- Cart Icon -->
+				<a href="cart.html" class="cart-icon-btn">
+					<i class="fas fa-shopping-cart"></i>
+					<span id="cart-count">0</span>
+				</a>
+
+				<!-- DYNAMIC USER PROFILE SECTION -->
+				<div id="auth-section" class="auth-wrapper">
+					<!-- Loader or default state before Firebase responds -->
+					<span class="auth-loading">...</span>
+				</div>
+			</div>
+
+			<div class="menu-toggle" id="mobile-menu">
+				<span></span><span></span><span></span>
+			</div>
 		</nav>
 	</header>
+	<div class="my-orders-section">
+		<h1 class="close-btn-orders" onclick="closeMyOrders()" style=" display: inline;
+    float: right; color: red;cursor: pointer;">X</h1>
+		<h2><i class="fas fa-shopping-bag"></i> আমার অর্ডারসমূহ (My Orders)</h2>
+
+		<!-- এই ডিভ-এর ভেতরেই জাভাস্ক্রিপ্ট সমস্ত ডেটা এনে পুশ করবে -->
+		<div id="my-orders-container">
+			<!-- লোডিং বা নোটিফিকেশন মেসেজ এখানে দেখাবে -->
+		</div>
+	</div>
 	<div class="slider-container">
-		<div class="slides" id="videoSlides">
-			<div class="slide">
-				<iframe width="560" height="200" src="https://www.youtube.com/embed/ZvqsezlCG-U?si=00qFO3Ez45qVG3G7"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			<div class="slide">
-				<iframe width="560" height="200" src="https://www.youtube.com/embed/NDHtUhzsEag?si=QCBzsunO4CIUYmLh"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			<div class="slide">
-				<iframe width="560" height="200" src="https://www.youtube.com/embed/t1kiAqVBgpY?si=u-AnkceffJEMZf68"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<div class="slides" id="astroBannerSlides">
+			<div class="slide dynamic-banner-wrapper"
+				style="position: relative; width: 100%; max-width: 100%; display: inline-block;" onclick="scroll_to_slider()">
+				<img src="./img/banner (3).png" alt="Astrology Consultation Banner" class="banner-img"
+					style="width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--border-color, rgba(255, 215, 0, 0.15));">
+				<div class="banner-price-overlay">
+					<span class="dynamic-fee-text" id="bannerPriceDisplay">₹.../-</span>
+				</div>
+
 			</div>
 		</div>
 
-		<button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-		<button class="next" onclick="moveSlide(1)">&#10095;</button>
+
 	</div>
 	<div class="ourservice">
 		<h1 class="ourserviceheading">Our Services</h1>
@@ -105,63 +119,71 @@
 					</div>
 
 					<div class="astro-content">
-
 						<div class="astro-card">
 							<h3>আপনার ভাগ্য কি আপনার হাতে?</h3>
-							<p>জ্যোতিষশাস্ত্র কেবল গণনা নয়, এটি একটি মহাজাগতিক মানচিত্র। আমাদের ইনার ইঞ্জিনিয়ারিং কোর্সের মাধ্যমে
-								আপনি শিখবেন কিভাবে গ্রহের নেতিবাচক প্রভাব কাটিয়ে নিজের ইচ্ছাশক্তিকে জাগ্রত করতে হয়।</p>
+							<p>জ্যোতিষশাস্ত্র কেবল গণনা নয়, এটি একটি মহাজাগতিক মানচিত্র। আমাদের ইনার ইঞ্জিনিয়ারিং কোর্সের মাধ্যমে
+								আপনি শিখবেন কিভাবে গ্রহের নেতিবাচক প্রভাব কাটিয়ে নিজের ইচ্ছাশক্তিকে জাগ্রত করতে হয়।</p>
 
 							<ul class="astro-list">
 								<li>🌟 <strong>কোষ্ঠী বিচার:</strong> আপনার জীবনের সঠিক দিকনির্দেশনা।</li>
 								<li>🪐 <strong>গ্রহের দশা মুক্তি:</strong> নেতিবাচক শক্তি থেকে সুরক্ষা।</li>
-								<li>🌙 <strong>মনস্তাত্ত্বিক জ্যোতিষ:</strong> মনের ওপর চন্দ্রের প্রভাব নিয়ন্ত্রণ।</li>
+								<li>🌙 <strong>মনস্তাত্ত্বিক জ্যোতিষ:</strong> মনের ওপর চন্দ্রের প্রভাব নিয়ন্ত্রণ।</li>
 							</ul>
-
 						</div>
+
 						<div class="astro-card">
 							<h3>আপনার বিবরণ প্রদান করুন</h3>
+							<div style="color: var(--gold); margin-bottom: 15px; font-weight: bold;" id="astroPriceDisplay">
+								<i class="fas fa-spinner fa-spin"></i> মূল্য লোড হচ্ছে...
+							</div>
 
 							<form id="astroForm" class="astro-form">
 								<div class="form-group">
 									<input type="text" id="userName" placeholder="আপনার নাম" required>
 								</div>
-								<div class="form-row">
-									<input type="date" id="birthDate" required title="জন্ম তারিখ">
-									<input type="time" id="birthTime" required title="জন্ম সময়">
+								<div class="form-row" style="display: flex; gap: 10px; margin-bottom: 15px;">
+									<input type="date" id="birthDate" required title="জন্ম তারিখ" style="flex: 1;">
+									<input type="time" id="birthTime" required title="জন্ম সময়" style="flex: 1;">
 								</div>
 								<div class="form-group">
 									<input type="text" id="birthPlace" placeholder="জন্মস্থান (শহর/গ্রাম)" required>
 								</div>
 								<div class="form-group">
-									<input type="text" id="whnum" placeholder="whatsapp Number" required>
+									<input type="text" id="whnum" placeholder="WhatsApp Number (10-digit)" pattern="[0-9]{10}" required>
 								</div>
 								<ul class="astro-list">
 									<li>🌟 কোষ্ঠী বিচার ও সঠিক দিকনির্দেশনা।</li>
 									<li>🪐 নেতিবাচক গ্রহের দশা থেকে মুক্তি।</li>
 								</ul>
-								<div id="successModal" class="modal-overlay">
-									<div class="payment-card" style="border-top: 5px solid var(--gold);">
-										<div class="card-icon">🙏</div>
-										<h3 style="color: var(--gold);">পেমেন্ট সফল হয়েছে!</h3>
 
-										<div class="success-message">
+								<div id="successModal" class="modal-overlay"
+									style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index: 9999;">
+									<div class="payment-card"
+										style="border-top: 5px solid var(--gold); background: #0d0d21; padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%;">
+										<div class="card-icon" style="font-size: 3rem; margin-bottom: 15px;">🙏</div>
+										<h3 style="color: var(--gold); margin-bottom: 15px;">পেমেন্ট সফল হয়েছে!</h3>
+										<div class="success-message" style="color: #fff; font-size: 0.95rem; line-height: 1.6;">
 											<p>আপনার তথ্য আমাদের কাছে পৌঁছেছে।</p>
-											<p><strong>একটু অপেক্ষা করুন, আমরা আপনার হোয়াটসঅ্যাপে সেরা সমাধানটি দিচ্ছি।</strong></p>
+											<p><strong>একটু অপেক্ষা করুন, আমরা আপনার হোয়াটসঅ্যাপে সেরা সমাধানটি দিচ্ছি।</strong></p>
 										</div>
-
-										<div class="wait-indicator">
-											<div class="dot"></div>
-											<div class="dot"></div>
-											<div class="dot"></div>
+										<div class="wait-indicator"
+											style="display: flex; justify-content: center; gap: 5px; margin-top: 15px;">
+											<div class="dot"
+												style="width:8px; height:8px; background:var(--gold); border-radius:50%; animation: blink 1.4s infinite both;">
+											</div>
+											<div class="dot"
+												style="width:8px; height:8px; background:var(--gold); border-radius:50%; animation: blink 1.4s infinite both; animation-delay: 0.2s;">
+											</div>
+											<div class="dot"
+												style="width:8px; height:8px; background:var(--gold); border-radius:50%; animation: blink 1.4s infinite both; animation-delay: 0.4s;">
+											</div>
 										</div>
-
-										<!--<a id="whatsappFinalLink" href="#" class="pay-option whatsapp">
-											সরাসরি আমাদের সাথে কথা বলুন
-										</a>-->
 									</div>
 								</div>
-								<button type="button" class="astro-btn" onclick="processAstroPayment()">
-									পেমেন্ট করুন ও বিশ্লেষণ শুরু করুন
+
+								<button type="submit" id="astroPayBtn" class="astro-btn" disabled
+									style="width: 100%; background: var(--gold); color: #000; border: none; padding: 14px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase;">
+									<i class="fas fa-spinner fa-spin"></i> Loading Price...
 								</button>
 							</form>
 						</div>
@@ -169,9 +191,12 @@
 				</div>
 			</div>
 		</section>
+	</section>
+
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
-		<!--<section class="astrology-section" id="astrology">
+	<!--<section class="astrology-section" id="astrology">
 			<div class="container">
 				<div class="astro-badge">Cosmic Wisdom</div>
 				<h2 class="section-title">বৈদিক জ্যোতিষশাস্ত্র ও আপনার ভবিষ্যৎ</h2>
@@ -204,86 +229,62 @@
 			</div>
 		</section>-->
 
-		<div class="container">
+	<div class="container">
 
-			<h2 class="section-title">আধ্যাত্মিক বিজ্ঞান ও চেতনার রহস্য</h2>
+		<h2 class="section-title">আধ্যাত্মিক বিজ্ঞান ও চেতনার রহস্য</h2>
 
-			<div class="knowledge-container">
-				<div class="knowledge-card">
-					<div class="card-icon">🌀</div>
-					<h3>কুণ্ডলিনী কি এবং তার উপকারিতা</h3>
-					<p>কুন্ডলিনী হল এক ধরনের আধ্যাত্মিক শক্তি, যা মানবদেহের মূলচক্রে শুয়ে থাকে। এটি উর্ধ্বমুখীভাবে প্রবাহিত হয়ে
-						শরীরের বিভিন্ন চক্র বা "চক্র" গুলিকে উদ্দীপ্ত করে আধ্যাত্মিক উন্নতি সাধন করে। কুন্ডলিনী উত্থান সাধনা, যোগ
-						এবং তন্ত্রের মাধ্যমে অর্জন করা যেতে পারে।</p>
-				</div>
+		<div class="knowledge-container" style="background-color: #1c1c1c;">
+			<div class="knowledge-card">
+				<div class="card-icon">🌀</div>
+				<h3>কুণ্ডলিনী কি এবং তার উপকারিতা</h3>
+				<p>কুন্ডলিনী হল এক ধরনের আধ্যাত্মিক শক্তি, যা মানবদেহের মূলচক্রে শুয়ে থাকে। এটি উর্ধ্বমুখীভাবে প্রবাহিত হয়ে
+					শরীরের বিভিন্ন চক্র বা "চক্র" গুলিকে উদ্দীপ্ত করে আধ্যাত্মিক উন্নতি সাধন করে। কুন্ডলিনী উত্থান সাধনা, যোগ
+					এবং তন্ত্রের মাধ্যমে অর্জন করা যেতে পারে।</p>
+			</div>
 
-				<div class="knowledge-card">
-					<div class="card-icon">🧠</div>
-					<h3>মস্তিষ্ক ক্ষমতা বৃদ্ধি এবং তার উপকারিতা</h3>
-					<p>মস্তিষ্কের শক্তি সক্রিয়করণ হল সেই প্রক্রিয়া, যার মাধ্যমে আমরা আমাদের মস্তিষ্কের পূর্ণ সম্ভাবনা উন্মুক্ত
-						করি। এটি ধ্যান, যোগ এবং সঠিক চিন্তাভাবনার মাধ্যমে সম্ভব। এটি মনোযোগ, স্মৃতিশক্তি এবং সৃজনশীলতা উন্নত করে
-						নিউরাল সংযোগ বৃদ্ধি করে।</p>
-				</div>
+			<div class="knowledge-card">
+				<div class="card-icon">🧠</div>
+				<h3>মস্তিষ্ক ক্ষমতা বৃদ্ধি এবং তার উপকারিতা</h3>
+				<p>মস্তিষ্কের শক্তি সক্রিয়করণ হল সেই প্রক্রিয়া, যার মাধ্যমে আমরা আমাদের মস্তিষ্কের পূর্ণ সম্ভাবনা উন্মুক্ত
+					করি। এটি ধ্যান, যোগ এবং সঠিক চিন্তাভাবনার মাধ্যমে সম্ভব। এটি মনোযোগ, স্মৃতিশক্তি এবং সৃজনশীলতা উন্নত করে
+					নিউরাল সংযোগ বৃদ্ধি করে।</p>
+			</div>
 
-				<div class="knowledge-card ">
-					<div class="card-icon">👁️</div>
-					<h3>থার্ড আই কি এবং তার উপকারিতা</h3>
-					<p>তৃতীয় চক্ষু বা "অগ্নিচক্ষু" হল একটি আধ্যাত্মিক শক্তি যা মস্তিষ্কের কেন্দ্রে অবস্থিত। এটি আমাদের
-						অন্তর্দৃষ্টি ও আধ্যাত্মিক জ্ঞান উন্মোচন করতে সাহায্য করে। এটি সক্রিয় করলে সৃজনশীলতা, স্পষ্ট চিন্তাভাবনা এবং
-						ব্রহ্মজ্ঞান উপলব্ধি সম্ভব হয়।</p>
-				</div>
+			<div class="knowledge-card ">
+				<div class="card-icon">👁️</div>
+				<h3>থার্ড আই কি এবং তার উপকারিতা</h3>
+				<p>তৃতীয় চক্ষু বা "অগ্নিচক্ষু" হল একটি আধ্যাত্মিক শক্তি যা মস্তিষ্কের কেন্দ্রে অবস্থিত। এটি আমাদের
+					অন্তর্দৃষ্টি ও আধ্যাত্মিক জ্ঞান উন্মোচন করতে সাহায্য করে। এটি সক্রিয় করলে সৃজনশীলতা, স্পষ্ট চিন্তাভাবনা এবং
+					ব্রহ্মজ্ঞান উপলব্ধি সম্ভব হয়।</p>
+			</div>
 
-				<div class="knowledge-card ">
-					<div class="card-icon">⏳</div>
-					<h3>ফিউচার লাইফ প্রোগ্রেশন (FLP)</h3>
-					<p>FLP আপনাকে আপনার ভবিষ্যৎ সম্পর্কে শক্তিশালী অন্তর্দৃষ্টি দেয়। ৫ বা ১০ বছর পর আপনি কী করবেন বা আপনার জীবন
-						কেমন হবে, এই থেরাপির মাধ্যমে আপনি সেই টাইমলাইনে অ্যাক্সেস পাবেন এবং আপনার ভবিষ্যৎ আবিষ্কার করতে পারবেন।</p>
-				</div>
+			<div class="knowledge-card ">
+				<div class="card-icon">⏳</div>
+				<h3>ফিউচার লাইফ প্রোগ্রেশন (FLP)</h3>
+				<p>FLP আপনাকে আপনার ভবিষ্যৎ সম্পর্কে শক্তিশালী অন্তর্দৃষ্টি দেয়। ৫ বা ১০ বছর পর আপনি কী করবেন বা আপনার জীবন
+					কেমন হবে, এই থেরাপির মাধ্যমে আপনি সেই টাইমলাইনে অ্যাক্সেস পাবেন এবং আপনার ভবিষ্যৎ আবিষ্কার করতে পারবেন।</p>
+			</div>
 
-				<div class="knowledge-card ">
-					<div class="card-icon">🕯️</div>
-					<h3>পাস্ট লাইফ রিগ্রেশন (PLR)</h3>
-					<p>এটি এক প্রাচীন তমো বৈদিক আবিষ্কার। যার দ্বারা পূর্বজনমে গিয়ে সবকিছু দেখা যায়। এই জন্মের রোগ, দুঃখ,
-						জ্বালা-যন্ত্রণা যা পূর্ব জন্ম থেকে আসছে, তা সেখানে গিয়ে ডিলিট করে দেওয়া যায়। ফলে আপনি বর্তমানে সম্পূর্ণ
-						সুস্থ হয়ে উঠবেন।</p>
-				</div>
+			<div class="knowledge-card ">
+				<div class="card-icon">🕯️</div>
+				<h3>পাস্ট লাইফ রিগ্রেশন (PLR)</h3>
+				<p>এটি এক প্রাচীন তমো বৈদিক আবিষ্কার। যার দ্বারা পূর্বজনমে গিয়ে সবকিছু দেখা যায়। এই জন্মের রোগ, দুঃখ,
+					জ্বালা-যন্ত্রণা যা পূর্ব জন্ম থেকে আসছে, তা সেখানে গিয়ে ডিলিট করে দেওয়া যায়। ফলে আপনি বর্তমানে সম্পূর্ণ
+					সুস্থ হয়ে উঠবেন।</p>
 			</div>
 		</div>
+	</div>
 	</section>
 
 	<section class="feedback-section">
 		<div class="container">
 			<h2 class="section-title">ছাত্র-ছাত্রীদের অভিজ্ঞতার ভিডিও (Success Stories)</h2>
-			<p class="section-subtitle">দেখুন কিভাবে ইনার ইঞ্জিনিয়ারিং হাজার হাজার মানুষের জীবন বদলে দিয়েছে</p>
+			<p class="section-subtitle">দেখুন কিভাবে ইনার ইঞ্জিনিয়ারিং হাজার হাজার মানুষের জীবন বদলে দিয়েছে</p>
 
-			<div class="feedback-grid">
-				<div class="video-card">
-					<div class="video-wrapper">
-						<iframe src="https://hypnorishi.in/wp-content/uploads/2024/12/bodmas.mp4" title="Student Feedback 1"
-							allowfullscreen></iframe>
-					</div>
-
-				</div>
-
-				<div class="video-card ">
-					<div class="video-wrapper">
-						<iframe src="https://hypnorishi.in/wp-content/uploads/2024/12/bodmas.mp4" title="Student Feedback 2"
-							allowfullscreen></iframe>
-					</div>
-
-				</div>
-
-				<div class="video-card">
-					<div class="video-wrapper">
-						<iframe src="https://hypnorishi.in/wp-content/uploads/2024/12/abhishek.mp4" title="Student Feedback 3"
-							allowfullscreen></iframe>
-					</div>
-
-				</div>
-			</div>
+			<div class="feedback-grid" id="dynamicFeedbackGrid"></div>
 		</div>
 	</section>
-	<script src="script.js"></script>
+	<script type="module" src="script.js"></script>
 	<script>
 		/* --- JAVASCRIPT LOGIC --- */
 		const menuBtn = document.getElementById('mobile-menu');
@@ -364,6 +365,85 @@
 		//setInterval(autoSlide, 5000); // Change video every 5 seconds
 
 	</script>
+	<script>
+		// ১. অল-ইন্ডিয়ান রিভিউ ডেটার অ্যারে (Array)
+		const feedbackData = [
+			{
+				initials: "অ",
+				text: "“ইনার ইঞ্জিনিয়ারিং কোর্সটি করার পর আমার মানসিক চাপ এক সপ্তাহের মধ্যে গায়েব হয়ে গেছে। ট্রেডিং ও সফটওয়্যার ডেভেলপমেন্টের কাজের মাঝে এখন নিজেকে খুব শান্ত রাখতে পারি।”",
+				name: "অনির্বাণ চ্যাটার্জী",
+				identity: "সফটওয়্যার ইঞ্জিনিয়ার, কলকাতা"
+			},
+			{
+				initials: "স",
+				text: "“পরীক্ষার আগে যে তীব্র ভয় ও মনোযোগের অভাব হতো, তা এখন একদমই নেই। জ্যোতিষশাস্ত্রীয় গাইডলাইন মেনে চলায় আমার পড়াশোনায় দারুণ মন বসছে।”",
+				name: "সায়ন্তনী ঘোষ",
+				identity: "কলেজ শিক্ষার্থী, বর্ধমান"
+			},
+			{
+				initials: "রা",
+				text: "“ব্যবসায়িক মন্দা চলায় খুব হতাশায় ছিলাম। আপনার পরামর্শে গ্রহের দশা মুক্তির জন্য দেওয়া লাইফস্টাইল পরিবর্তনগুলো আমার আত্মবিশ্বাস পুরোপুরি ফিরিয়ে এনেছে।”",
+				name: "রাজেশ শর্মা",
+				identity: "ব্যবসায়ী, শিলিগুড়ি"
+			},
+			{
+				initials: "দী",
+				text: "“মেডিটেশনের সঠিক টেকনিক আমি এই প্রথম শিখলাম। মনের ওপর চন্দ্রের নেতিবাচক প্রভাব কাটানোর সেশনটি অসাধারণ ছিল। ধন্যবাদ Hypno Rishi!”",
+				name: "দীপক মিশ্র",
+				identity: "ব্যাংক কর্মকর্তা, আসানসোল"
+			},
+			{
+				initials: "প্র",
+				text: "“প্রথম দিকে বিশ্বাস করতে একটু দ্বিধা হচ্ছিল, কিন্তু মাত্র ১৫ দিন ইনার ইঞ্জিনিয়ারিং প্র্যাকটিস করার পর নিজের কাজের গতি ও সিদ্ধান্ত নেওয়ার ক্ষমতা দারুণ উন্নত হয়েছে।”",
+				name: "প্রীতম ব্যানার্জী",
+				identity: "ফ্রিল্যান্সার, দুর্গাপুর"
+			}
+		];
+
+		// ২. রিভিউগুলো র‍্যান্ডমাইজ বা মিক্স করার ফাংশন (Fisher-Yates Shuffle)
+		function shuffleArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+
+		// ৩. গ্রিডে ডেটা পুশ করার মেইন লজিক
+		function renderRandomFeedback() {
+			const gridContainer = document.getElementById('dynamicFeedbackGrid');
+			if (!gridContainer) return;
+
+			// ডেটা র‍্যান্ডম মিক্স করা হলো
+			const shuffledFeedback = shuffleArray([...feedbackData]);
+
+			let htmlContent = '';
+
+			shuffledFeedback.forEach(item => {
+				htmlContent += `
+					<div class="feedback-card">
+						<div>
+							<div class="stars">⭐⭐⭐⭐⭐</div>
+							<p class="feedback-text">${item.text}</p>
+						</div>
+						<div class="student-profile">
+							<div class="student-avatar">${item.initials}</div>
+							<div class="student-info">
+								<h4>${item.name}</h4>
+								<p>${item.identity}</p>
+							</div>
+						</div>
+					</div>
+				`;
+			});
+
+			gridContainer.innerHTML = htmlContent;
+		}
+
+		// পেজ লোড হওয়ার সাথে সাথে রান হবে
+		document.addEventListener('DOMContentLoaded', renderRandomFeedback);
+	</script>
+
 
 </body>
 

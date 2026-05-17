@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hypno Rishi Shop - Products</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style>
+		:root {
+			--gold: #ffd700;
+			--deep-purple: #1a1a2e;
+			--glass: rgba(255, 255, 255, 0.05);
+		}
+
+		body.shop-page {
+			background: radial-gradient(circle at center, #1a1a2e, #05050a);
+			color: white;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+
+		header {
+			text-align: center;
+			padding: 50px 20px;
+		}
+
+		.cart-icon-btn {
+			position: relative;
+			color: var(--gold);
+			font-size: 1.2rem;
+			text-decoration: none;
+		}
+
+		#cart-count {
+			position: absolute;
+			top: -8px;
+			right: -10px;
+			background: #ff3e3e;
+			color: white;
+			font-size: 10px;
+			padding: 2px 5px;
+			border-radius: 50%;
+			font-weight: bold;
+		}
+
+		header h1 {
+			color: var(--gold);
+			font-size: 2.5rem;
+		}
+
+		.product-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 30px;
+			padding: 20px;
+		}
+
+		.product-card {
+			background: var(--glass);
+			border: 1px solid rgba(255, 215, 0, 0.1);
+			border-radius: 15px;
+			overflow: hidden;
+			transition: 0.3s ease;
+			backdrop-filter: blur(5px);
+		}
+
+		.product-card:hover {
+			transform: translateY(-8px);
+			border-color: var(--gold);
+			box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
+		}
+
+		.product-img-box {
+			position: relative;
+			height: 220px;
+			background: #000;
+		}
+
+		.product-img-box img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.price-tag {
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			background: var(--gold);
+			color: black;
+			padding: 5px 15px;
+			border-radius: 20px;
+			font-weight: bold;
+		}
+
+		.product-info {
+			padding: 20px;
+			text-align: center;
+		}
+
+		.product-info h3 {
+			margin-bottom: 10px;
+			color: var(--gold);
+		}
+
+		.buy-now-btn {
+			width: 100%;
+			background: transparent;
+			border: 1px solid var(--gold);
+			color: var(--gold);
+			padding: 12px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: bold;
+			transition: 0.3s;
+		}
+
+		.buy-now-btn:hover {
+			background: var(--gold);
+			color: black;
+		}
+
+		.loader {
+			grid-column: 1 / -1;
+			text-align: center;
+			padding: 50px;
+			font-style: italic;
+			color: var(--gold);
+		}
+
+		#successModal {
+			display: none;
+		}
+
+		/* Tooltip Container */
+		.info-tooltip {
+			position: absolute;
+			top: 15px;
+			left: 15px;
+			z-index: 10;
+		}
+
+		/* The "i" Icon */
+		.info-icon {
+			width: 24px;
+			height: 24px;
+			background: rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(5px);
+			border: 1px solid var(--gold);
+			color: var(--gold);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 14px;
+			font-weight: bold;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		.info-icon:hover {
+			background: var(--gold);
+			color: black;
+		}
+
+		/* Tooltip Text (Hidden by default) */
+		.tooltip-text {
+			visibility: hidden;
+			width: 220px;
+			background-color: rgba(20, 20, 35, 0.95);
+			color: #fff;
+			text-align: left;
+			border: 1px solid var(--gold);
+			border-radius: 10px;
+			padding: 12px;
+			position: absolute;
+			z-index: 11;
+			top: 35px;
+			left: 0;
+			opacity: 0;
+			transition: opacity 0.3s, visibility 0.3s;
+			font-size: 13px;
+			line-height: 1.4;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+		}
+
+		/* Arrow for the Tooltip */
+		.tooltip-text::after {
+			content: "";
+			position: absolute;
+			bottom: 100%;
+			left: 10px;
+			border-width: 6px;
+			border-style: solid;
+			border-color: transparent transparent var(--gold) transparent;
+		}
+
+		.view-btn {
+
+			color: antiquewhite;
+			text-decoration: none;
+		}
+
+		/* Show on Hover */
+		.info-tooltip:hover .tooltip-text {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		/* Touch support for Mobile */
+		.info-tooltip:active .tooltip-text {
+			visibility: visible;
+			opacity: 1;
+		}
+	</style>
+</head>
+
+<body class="shop-page">
+	<a href="cart.html" class="cart-icon-btn" style="float: inline-end;
+	margin: 1rem;
+	font-size: 2rem;">
+		<i class="fas fa-shopping-cart"></i>
+		<span id="cart-count">0</span>
+	</a>
+	<header>
+		<h1>Hypno Rishi Divine Shop</h1>
+		<p>পবিত্র সামগ্রী ও প্রতিকার</p>
+
+	</header>
+
+	<main class="container">
+		<div id="product-container" class="product-grid">
+			<div class="loader">ব্রহ্মাণ্ড থেকে তথ্য আনা হচ্ছে...</div>
+		</div>
+	</main>
+
+	<div id="successModal" class="modal-overlay">
+		<div class="payment-card">
+			<h3>অর্ডার সফল হয়েছে!</h3>
+			<p>আমরা শীঘ্রই আপনার সাথে যোগাযোগ করছি।</p>
+			<button onclick="document.getElementById('successModal').style.display='none'">বন্ধ করুন</button>
+		</div>
+	</div>
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+		import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+		// 1. YOUR FIREBASE CONFIG
+		const firebaseConfig = {
+			apiKey: "AIzaSyAWSP0h6GdY-JZvh0X0hk6Pk6F8ZiFc3kg",
+			authDomain: "astrology-8d207.firebaseapp.com",
+			projectId: "astrology-8d207",
+			storageBucket: "astrology-8d207.firebasestorage.app",
+			messagingSenderId: "473083037288",
+			appId: "1:473083037288:web:72f71ebeb829da87fe9ddd",
+			measurementId: "G-S48PVV3H7N"
+		};
+
+		// 2. Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+		const productContainer = document.getElementById('product-container');
+
+		// 3. Fetch Data in Real-Time
+		const q = query(collection(db, "products"), orderBy("timestamp", "desc"));
+
+		onSnapshot(q, (snapshot) => {
+			productContainer.innerHTML = ""; // Remove loader
+
+			if (snapshot.empty) {
+				productContainer.innerHTML = "<p>বর্তমানে কোনো সামগ্রী উপলব্ধ নেই।</p>";
+				return;
+			}
+
+			snapshot.forEach((doc) => {
+				const item = doc.data();
+				const productId = doc.id; // Get the unique ID from Firebase
+
+				const card = `
+        <div class="product-card">
+            <a href="details.html?id=${productId}" class="product-link">
+                <div class="product-img-box">
+                    <img src="${item.image}" alt="${item.name}">
+                    <span class="price-tag">₹${item.price}</span>
+                </div>
+            </a>
+            <div class="product-info">
+                <h3>${item.name}</h3>
+                <div class="card-actions">
+                    <a href="details.html?id=${productId}" class="view-btn">View Details</a>
+                    <button class="buy-now-btn" onclick="addToCart('${item.name}', ${item.price})">Quick Buy</button>
+                </div>
+            </div>
+        </div>
+    `;
+				productContainer.insertAdjacentHTML('beforeend', card);
+			});
+
+
+		});
+
+		// 4. Razorpay Integration
+		window.initiatePayment = function (name, price) {
+			var options = {
+				"key": "rzp_test_SctD70Wol2OPE6",
+				"amount": price * 100,
+				"currency": "INR",
+				"name": "Hypno Rishi",
+				"description": "Purchase: " + name,
+				"handler": function (response) {
+					document.getElementById('successModal').style.display = 'flex';
+					// Optional: Trigger EmailJS here to notify yourself of the sale
+				},
+				"theme": { "color": "#673ab7" }
+			};
+			var rzp1 = new Razorpay(options);
+			rzp1.open();
+		}
+
+		function updateCartBadge() {
+			const cart = JSON.parse(localStorage.getItem('hypnoCart')) || [];
+			document.getElementById('cart-count').innerText = cart.length;
+		}
+		window.addToCart = function (name, price) {
+			let cart = JSON.parse(localStorage.getItem('hypnoCart')) || [];
+			cart.push({ name, price });
+			localStorage.setItem('hypnoCart', JSON.stringify(cart));
+
+			alert(`${name} added to cart!`);
+			console.log("cart item is", cart)
+			updateCartBadge();
+			// Optional: Redirect to a cart page or update a counter
+		};
+		// Run on load
+		updateCartBadge();
+
+
+	</script>
+</body>
+
+</html>

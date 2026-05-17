@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hypno Rishi - About Us</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<style>
+		:root {
+			--bg-color: #0d0d21;
+			--card-bg: rgba(255, 255, 255, 0.03);
+			--gold: #ffd700;
+			--text-color: #ffffff;
+			--text-muted: #a1a1b5;
+			--border-color: rgba(255, 215, 0, 0.15);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Roboto, sans-serif;
+		}
+
+		body {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			line-height: 1.6;
+		}
+
+		/* হিরো সেকশন */
+		.about-hero {
+			position: relative;
+			padding: 80px 20px;
+			text-align: center;
+			background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+			border-bottom: 1px solid var(--border-color);
+		}
+
+		.about-hero h1 {
+			color: var(--gold);
+			font-size: 2.8rem;
+			margin-bottom: 15px;
+			letter-spacing: 1px;
+		}
+
+		.about-hero p {
+			color: var(--text-muted);
+			font-size: 1.1rem;
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		/* মেইন কন্টেন্ট কন্টেইনার */
+		.about-container {
+			max-width: 1000px;
+			margin: 50px auto;
+			padding: 0 20px;
+		}
+
+		/* ভিশন ও মিশন গ্রিড */
+		.vision-mission-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 30px;
+			margin-bottom: 60px;
+		}
+
+		.about-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border-color);
+			border-radius: 12px;
+			padding: 35px;
+			backdrop-filter: blur(10px);
+			transition: transform 0.3s ease;
+		}
+
+		.about-card:hover {
+			transform: translateY(-5px);
+		}
+
+		.about-card .icon-box {
+			font-size: 2.5rem;
+			color: var(--gold);
+			margin-bottom: 20px;
+		}
+
+		.about-card h2 {
+			color: var(--gold);
+			font-size: 1.5rem;
+			margin-bottom: 15px;
+		}
+
+		.about-card p {
+			color: #e2e2ec;
+			font-size: 0.98rem;
+			text-align: justify;
+		}
+
+		/* আওয়ার স্টোরি বা বিস্তারিত সেকশন */
+		.story-section {
+			background: var(--card-bg);
+			border: 1px solid rgba(255, 255, 255, 0.05);
+			border-radius: 12px;
+			padding: 40px;
+			margin-bottom: 60px;
+		}
+
+		.story-section h2 {
+			color: var(--gold);
+			font-size: 1.8rem;
+			margin-bottom: 20px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.story-section p {
+			color: #e2e2ec;
+			font-size: 1rem;
+			margin-bottom: 15px;
+			text-align: justify;
+		}
+
+		/* কেন আমাদের বেছে নেবেন */
+		.why-us-section {
+			text-align: center;
+			margin-bottom: 40px;
+		}
+
+		.why-us-section h2 {
+			color: var(--gold);
+			font-size: 1.8rem;
+			margin-bottom: 30px;
+		}
+
+		.features-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 20px;
+		}
+
+		.feature-item {
+			padding: 25px;
+			background: rgba(255, 255, 255, 0.01);
+			border: 1px solid rgba(255, 255, 255, 0.05);
+			border-radius: 8px;
+		}
+
+		.feature-item i {
+			font-size: 2rem;
+			color: var(--gold);
+			margin-bottom: 15px;
+		}
+
+		.feature-item h3 {
+			font-size: 1.1rem;
+			margin-bottom: 10px;
+		}
+
+		.feature-item p {
+			font-size: 0.9rem;
+			color: var(--text-muted);
+		}
+
+		/* ফুটারে অ্যাকশন বাটন */
+		.about-cta {
+			text-align: center;
+			margin-top: 50px;
+			padding: 30px;
+			border-top: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.cta-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			background: var(--gold);
+			color: #000;
+			text-decoration: none;
+			padding: 14px 35px;
+			font-size: 1rem;
+			font-weight: bold;
+			border-radius: 8px;
+			text-transform: uppercase;
+			transition: 0.3s;
+		}
+
+		.cta-btn:hover {
+			background: #ffe240;
+			box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+		}
+
+		/* রেসপন্সিভ ডিজাইন */
+		@media (max-width: 768px) {
+			.about-hero h1 {
+				font-size: 2.2rem;
+			}
+
+			.vision-mission-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.story-section {
+				padding: 25px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="about-hero">
+		<h1>Hypno Rishi</h1>
+		<p>মহাজাগতিক জ্ঞান ও আত্মিক রূপান্তরের এক আধ্যাত্মিক যাত্রা।</p>
+	</header>
+
+	<div class="about-container">
+
+		<section class="vision-mission-grid">
+			<div class="about-card">
+				<div class="icon-box"><i class="fas fa-eye"></i></div>
+				<h2>আমাদের লক্ষ্য (Our Vision)</h2>
+				<p>প্রাচীন বৈদিক জ্যোতিষশাস্ত্র, ইনার ইঞ্জিনিয়ারিং এবং মনস্তাত্ত্বিক আধ্যাত্মিকতার সঠিক সমন্বয়ে প্রতিটি মানুষের
+					জীবনকে আলোকময় করে তোলা। কুসংস্কারমুক্ত সঠিক মহাজাগতিক মানচিত্রের সাহায্যে জীবনের সঠিক দিকনির্দেশনা প্রদান করাই
+					আমাদের মূল লক্ষ্য।</p>
+			</div>
+
+			<div class="about-card">
+				<div class="icon-box"><i class="fas fa-bullseye"></i></div>
+				<h2>আমাদের উদ্দেশ্য (Our Mission)</h2>
+				<p>আধুনিক যুগের ব্যস্ততা এবং মানসিক ক্লান্তির মাঝে মানুষকে নিজের ইচ্ছাশক্তি জাগ্রত করতে সাহায্য করা। গ্রহের
+					নেতিবাচক দশা কাটিয়ে মনের ওপর চন্দ্রের প্রভাব নিয়ন্ত্রণ এবং মনস্তাত্ত্বিক কাউন্সেলিংয়ের মাধ্যমে একটি
+					ভারসাম্যপূর্ণ জীবন উপহার দেওয়া।</p>
+			</div>
+		</section>
+
+		<section class="story-section">
+			<h2><i class="fas fa-om"></i> আমাদের কথা (The Journey of Hypno Rishi)</h2>
+			<p>স্বাগতম <strong>Hypno Rishi</strong>-তে। আমরা বিশ্বাস করি, জ্যোতিষশাস্ত্র কেবল কোনো গণনা বা অন্ধবিশ্বাস নয়—এটি
+				আপনার জীবনের একটি গভীর মহাজাগতিক গাইডবুক। মানবজীবনের মানসিক জটিলতা, গ্রহের অবস্থানগত প্রভাব এবং সঠিক আধ্যাত্মিক
+				সমাধানের মেলবন্ধন ঘটাতেই এই প্ল্যাটফর্মের আত্মপ্রকাশ।</p>
+			<p>এখানে আমরা অত্যন্ত দক্ষতার সাথে বৈদিক কোষ্ঠী বিচার, গ্রহের দশা মুক্তি এবং মনস্তাত্ত্বিক জ্যোতিষতত্ত্ব নিয়ে কাজ
+				করি। শুধু ভবিষ্যৎ বাণী করাই আমাদের কাজ নয়, বরং আপনার ইচ্ছাশক্তি ও কর্মকে জাগ্রত করে কীভাবে নিজের ভাগ্যকে নিজের
+				নিয়ন্ত্রণে আনা যায়, আমরা সেই পথ দেখাই।</p>
+		</section>
+
+		<section class="why-us-section">
+			<h2>কেন আপনি Hypno Rishi-কে বেছে নেবেন?</h2>
+			<div class="features-grid">
+				<div class="feature-item">
+					<i class="fas fa-star-of-david"></i>
+					<h3>সঠিক বৈদিক বিচার</h3>
+					<p>প্রাচীন নিয়মানুযায়ী নিখুঁত কোষ্ঠী ও গ্রহের দশা বিশ্লেষণ।</p>
+				</div>
+
+				<div class="feature-item">
+					<i class="fas fa-brain"></i>
+					<h3>মনস্তাত্ত্বিক সমাধান</h3>
+					<p>মনের শক্তি ও চন্দ্রের প্রভাব সামঞ্জস্য করার বিশেষ গাইডেন্স।</p>
+				</div>
+
+				<div class="feature-item">
+					<i class="fas fa-user-shield"></i>
+					<h3>১০০% গোপনীয়তা</h3>
+					<p>আপনার সমস্ত ব্যক্তিগত বিবরণ ও জন্ম কুণ্ডলী সম্পূর্ণ নিরাপদ।</p>
+				</div>
+
+				<div class="feature-item">
+					<i class="fab fa-whatsapp"></i>
+					<h3>সহজ ও দ্রুত সাপোর্ট</h3>
+					<p>পেমেন্টের পর সরাসরি আপনার হোয়াটসঅ্যাপে সেরা সমাধান প্রদান।</p>
+				</div>
+			</div>
+		</section>
+
+		<div class="about-cta">
+			<a href="index.html#astrology" class="cta-btn">
+				<i class="fas fa-sparkles"></i> আপনার বিশ্লেষণ শুরু করুন
+			</a>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login - Hypno Rishi</title>
+	<link rel="stylesheet" href="stylelog.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="shop-page" style="display: flex; justify-content: center; background-color: #212320;">
+
+	<div class="auth-container">
+		<div class="auth-card">
+			<div class="auth-header">
+				<div class="logo">Hypno rishi</div>
+				<h2 id="auth-title">লগইন করুন</h2>
+			</div>
+
+			<div class="auth-body">
+				<form id="email-form">
+					<input type="email" id="auth-email" placeholder="Email Address" required class="auth-input">
+					<input type="password" id="auth-password" placeholder="Password" required class="auth-input">
+					<button type="submit" id="main-auth-btn" class="main-btn">Login</button>
+				</form>
+
+				<div class="divider"><span>OR</span></div>
+
+				<button id="google-login-btn" class="google-btn">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png"
+						alt="Google">
+					Google দিয়ে এগিয়ে যান
+				</button>
+
+				<!-- Inside your login.html file -->
+				<p class="toggle-text">
+					Account নেই? <a href="signup.html">Signup করুন</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script type="module" src="login.js"></script>
+</body>
+
+</html>

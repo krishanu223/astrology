@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Product Details - Hypno Rishi</title>
+	<link rel="stylesheet" href="styles.css">
+	<style>
+		.detail-layout {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 50px;
+			margin-top: 50px;
+			background: rgba(255, 255, 255, 0.02);
+			padding: 40px;
+			border-radius: 20px;
+			border: 1px solid rgba(255, 215, 0, 0.1);
+		}
+
+		.detail-img img {
+			width: 100%;
+			border-radius: 15px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+		}
+
+		.detail-content h1 {
+			color: var(--gold);
+			margin: 1px 0;
+		}
+
+		.detail-price {
+
+			font-size: 2rem;
+			font-weight: bold;
+			color: #007b17;
+			margin: 0px;
+		}
+
+		.full-description {
+			margin: 30px 0;
+			line-height: 1.8;
+			color: #000000;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			padding-top: 20px;
+			background-color: #c5c3c359;
+			border-radius: 10px;
+		}
+
+
+		.action-buttons {
+			display: flex;
+			gap: 15px;
+		}
+
+		.add-cart-btn {
+			flex: 1;
+			padding: 14px;
+			background: #ffd600;
+			border: 2px solid var(--gold);
+			color: black;
+			font-weight: bold;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 1rem;
+		}
+
+		.add-cart-btn:hover {
+			background: rgba(255, 215, 0, 0.1);
+		}
+
+		.category-badge {
+			color: bisque;
+		}
+
+		.buy-now-btn {
+			background: #0070ff;
+			color: white;
+			border-radius: 5px;
+			font-size: 1rem;
+		}
+
+		.full-description {
+			color: aliceblue;
+		}
+
+		header {
+			width: 100vw;
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.detail-layout {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+
+<body class="shop-page">
+	<header>
+		<nav>
+			<div class="logo">Hypno rishi</div>
+
+			<ul class="nav-links" id="nav-list">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About Us</a></li>
+				<li><a href="products.html">Sadhana Kit</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="booking.html" class="book-btn">Book a Seat</a></li>
+			</ul>
+
+
+			<div class="menu-toggle" id="mobile-menu">
+				<span></span><span></span><span></span>
+			</div>
+		</nav>
+	</header>
+	<div class="container detail-container" id="product-details">
+		<p class="loader">Loading sacred details...</p>
+	</div>
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+		import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyAWSP0h6GdY-JZvh0X0hk6Pk6F8ZiFc3kg",
+			authDomain: "astrology-8d207.firebaseapp.com",
+			projectId: "astrology-8d207",
+			storageBucket: "astrology-8d207.firebasestorage.app",
+			messagingSenderId: "473083037288",
+			appId: "1:473083037288:web:72f71ebeb829da87fe9ddd",
+			measurementId: "G-S48PVV3H7N"
+		};
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+
+		// 1. Get ID from URL
+		const urlParams = new URLSearchParams(window.location.search);
+		const productId = urlParams.get('id');
+
+		async function loadProduct() {
+			const docRef = doc(db, "products", productId);
+			const docSnap = await getDoc(docRef);
+
+			if (docSnap.exists()) {
+				const item = docSnap.data();
+				document.getElementById('product-details').innerHTML = `
+                    <div class="detail-layout">
+                        <div class="detail-img">
+                            <img src="${item.image}" alt="${item.name}">
+														 <div class="action-buttons">
+                                <button class="add-cart-btn" onclick="addToCart('${item.name}', ${item.price})">Add to Cart</button>
+                                <button class="buy-now-btn" onclick="addToCart('${item.name}', ${item.price})">Buy Now</button>
+                            </div>
+                        </div>
+												
+                        <div class="detail-content">
+                            <span class="category-badge">Spiritual Remedy</span>
+                            <h1>${item.name}</h1>
+                            <p class="detail-price">₹${item.price}</p>
+                            
+                            <div class="full-description">
+                                <h3 style='    margin-left: 5px;'>About this Item</h3>
+                                <p style="text-align: justify;color: burlywood;font-we
+ight: bold; padding: 10px">${item.desc}</p>
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                `;
+			} else {
+				document.getElementById('product-details').innerHTML = "Product not found.";
+			}
+		}
+		loadProduct();
+
+		window.addToCart = function (name, price) {
+			let cart = JSON.parse(localStorage.getItem('hypnoCart')) || [];
+			cart.push({ name, price });
+			localStorage.setItem('hypnoCart', JSON.stringify(cart));
+
+			alert(`${name} added to cart!`);
+			// Optional: Redirect to a cart page or update a counter
+		};
+	</script>
+</body>
+
+</html>

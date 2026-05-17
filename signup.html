@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hypno Rishi - Signup</title>
+	<link rel="stylesheet" href="stylelog.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/font-weight.min.css">
+</head>
+
+<body class="auth-body-bg">
+
+	<div class="auth-container">
+		<div class="auth-card">
+			<div class="auth-header">
+				<div class="logo">Hypno rishi</div>
+				<h2>নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+			</div>
+
+			<div class="auth-body">
+				<form id="signup-form">
+					<!-- Name -->
+					<input type="text" id="signup-name" placeholder="আপনার সম্পূর্ণ নাম (Full Name)" required class="auth-input">
+
+					<!-- Mobile Number -->
+					<input type="tel" id="signup-phone" placeholder="মোবাইল নম্বর (10-digit Phone)" pattern="[0-9]{10}" required
+						class="auth-input">
+
+					<!-- Email -->
+					<input type="email" id="signup-email" placeholder="ইমেল অ্যাড্রেস (Email Address)" required
+						class="auth-input">
+
+					<!-- Password -->
+					<input type="password" id="signup-password" placeholder="পাসওয়ার্ড (Password - Min 6 chars)" minlength="6"
+						required class="auth-input">
+
+					<button type="submit" id="signup-btn" class="main-btn">Sign Up</button>
+
+					<div class="auth-divider">
+						<span>অথবা (Or)</span>
+					</div>
+
+					<!-- গুগল সাইন-আপ বোতাম -->
+					<button type="button" id="google-signup-btn" class="google-btn">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+						Sign up with Google
+					</button>
+				</form>
+
+				<p class="toggle-text">
+					Account আছে? <a href="login.html">লগইন করুন (Login)</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<script type="module" src="signup.js"></script>
+</body>
+
+</html>
